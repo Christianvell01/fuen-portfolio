@@ -20,3 +20,6 @@ const aboutDialog=document.querySelector('#about-dialog');
 document.querySelector('#more-about').addEventListener('click',()=>aboutDialog.showModal());
 document.querySelector('#close-about').addEventListener('click',()=>aboutDialog.close());
 document.querySelector('#about-work').addEventListener('click',()=>{aboutDialog.close();location.hash='work';});
+
+const cursorLight=document.querySelector('.cursor-light');
+if(cursorLight&&matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches){let pointerFrame=0;document.addEventListener('pointermove',e=>{cancelAnimationFrame(pointerFrame);pointerFrame=requestAnimationFrame(()=>{cursorLight.style.transform=`translate(${e.clientX-120}px,${e.clientY-120}px)`;});});}

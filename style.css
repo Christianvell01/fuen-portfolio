@@ -187,13 +187,15 @@ nav a.is-active:after{transform:scaleX(1)}
 .profile-card:hover .profile-portrait{box-shadow:0 24px 65px rgba(0,0,0,.58),0 0 72px rgba(185,140,255,.18)}
 .js-enhanced [data-reveal-ready]{
   opacity:0;
-  transform:translate3d(0,28px,0) scale(.99);
+  translate:0 28px;
+  scale:.99;
   filter:blur(8px);
-  transition:opacity .72s var(--ease-out) var(--reveal-delay,0ms),transform .72s var(--ease-out) var(--reveal-delay,0ms),filter .72s ease var(--reveal-delay,0ms);
+  transition:opacity .72s var(--ease-out) var(--reveal-delay,0ms),translate .72s var(--ease-out) var(--reveal-delay,0ms),scale .72s var(--ease-out) var(--reveal-delay,0ms),filter .72s ease var(--reveal-delay,0ms);
 }
 .js-enhanced [data-reveal-ready].is-revealed{
   opacity:1;
-  transform:translate3d(0,0,0) scale(1);
+  translate:0 0;
+  scale:1;
   filter:blur(0);
 }
 .video-card,.services-grid article,.featured-card{
@@ -366,7 +368,7 @@ dialog[open]::backdrop{animation:backdrop-in .3s ease both}
 }
 @media(prefers-reduced-motion:reduce){
   .ambient-layer,.cursor-light,.cursor-ring{display:none!important}
-  .js-enhanced [data-reveal-ready]{opacity:1!important;transform:none!important;filter:none!important}
+  .js-enhanced [data-reveal-ready]{opacity:1!important;translate:none!important;scale:1!important;filter:none!important}
   .about-copy h2 span,.featured-intro h2 span,.services-section h2 span,.brand-mark:after{animation:none!important}
   .video-card,.featured-card,.services-grid article,.button,.hire-button,.profile-portrait{transform:none!important}
 }

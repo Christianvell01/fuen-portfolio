@@ -20,7 +20,7 @@
       <button class="navBtn" data-scroll="storyboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z"/></svg><span>Storyboard</span></button>
       <button class="navBtn" data-scroll="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 1.98l.06.06-2.83 2.83-.06-.06a1.8 1.8 0 0 0-1.98-.36 1.8 1.8 0 0 0-1.09 1.65V21h-4v-.1A1.8 1.8 0 0 0 8.77 19.25a1.8 1.8 0 0 0-1.98.36l-.06.06-2.83-2.83.06-.06A1.8 1.8 0 0 0 4.32 15a1.8 1.8 0 0 0-1.65-1.09H2v-4h.67A1.8 1.8 0 0 0 4.32 8.8a1.8 1.8 0 0 0-.36-1.98l-.06-.06 2.83-2.83.06.06a1.8 1.8 0 0 0 1.98.36A1.8 1.8 0 0 0 9.86 2.7V2h4v.7a1.8 1.8 0 0 0 1.09 1.65 1.8 1.8 0 0 0 1.98-.36l.06-.06 2.83 2.83-.06.06a1.8 1.8 0 0 0-.36 1.98 1.8 1.8 0 0 0 1.65 1.09H22v4h-.95A1.8 1.8 0 0 0 19.4 15Z"/></svg><span>Settings</span></button>
     </nav>
-    <div class="sideHint"><div class="tiny">Private workspace</div><p>Your project data stays in this browser. No product image is uploaded to a server in this MVP.</p></div>
+    <div class="sideHint"><div class="tiny">Private workspace</div><p>Your project data stays in this browser. AI product research is only sent to your private backend when connected.</p></div>
   </aside>
 
   <main class="main">
@@ -30,7 +30,7 @@
     </header>
 
     <section class="hero" id="creator">
-      <div><h2>Build your shot list before you generate</h2><p>Use Product mode for automatic ad concepts, Script mode for scene breakdowns, or Continuity mode to lock characters and locations across every shot.</p></div>
+      <div><h2>Build your shot list before you generate</h2><p>Use Product mode for automatic ad concepts, Script mode for scene breakdowns, Continuity mode to lock characters and locations, or Studio Reel for fixed-set product shots.</p></div>
       <div class="steps" aria-label="Workflow progress"><div class="step active" id="step1"><b>1</b>Input</div><div class="step" id="step2"><b>2</b>Plan</div><div class="step" id="step3"><b>3</b>Storyboard</div><div class="step" id="step4"><b>4</b>Export</div></div>
     </section>
 
@@ -100,7 +100,7 @@
           </div>
           <div class="generateBlock">
             <button class="btn primary" id="generateBtn">Generate storyboard</button>
-            <div class="miniStatus" id="statusBox"><b>Ready.</b> Add a product or script, then generate. The current MVP plans the visuals and prompts locally in your browser.</div>
+            <div class="miniStatus" id="statusBox"><b>Ready.</b> Add a product or script, then generate. If AI research is connected, product uploads are analyzed before shot prompts are built.</div>
           </div>
         </div>
       </aside>
@@ -117,6 +117,7 @@
 <div class="toastWrap" id="toastWrap" aria-live="polite"></div>
 <script src="app.js"></script>
 <script src="showcase.js"></script>
+<script src="product-ai.js"></script>
 
 </body>
 </html>

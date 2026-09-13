@@ -1,189 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Storyboard AI Builder</title>
-  <style>
-    :root{--bg:#0c1020;--card:#161d33;--muted:#b5bfd8;--text:#eef3ff;--accent:#8ea0ff;--accent2:#69e0cf}
-    *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#0b1020,#141c31);color:var(--text)}
-    .wrap{display:grid;grid-template-columns:320px 1fr;gap:20px;padding:20px;min-height:100vh}
-    .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px}
-    h1,h2,h3,p{margin:0 0 12px} h1{font-size:30px} h2{font-size:18px} h3{font-size:16px}
-    .muted{color:var(--muted);line-height:1.55}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);font-weight:700}
-    label{display:block;margin:0 0 12px;color:var(--muted);font-size:14px}
-    input,textarea,select,button{font:inherit} input,textarea,select{width:100%;margin-top:6px;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0d1324;color:var(--text)}
-    textarea{resize:vertical} .script{min-height:240px}.small{min-height:90px}
-    .actions,.topActions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:none;border-radius:12px;padding:11px 14px;cursor:pointer}
-    .primary{background:var(--accent);color:white}.secondary{background:rgba(255,255,255,.08);color:var(--text)}.ghost{background:transparent;color:var(--muted)}
-    .main{display:flex;flex-direction:column;gap:20px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}.out{display:flex;flex-direction:column;gap:16px}
-    .scene{padding:16px;border-radius:16px;background:#0f1527;border:1px solid rgba(255,255,255,.08)} .shotgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:14px}
-    .shot{padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07)}
-    .meta{font-size:13px;color:var(--muted)} pre{white-space:pre-wrap;word-break:break-word;background:#090e1b;border-radius:12px;padding:10px;color:#dbe5ff;font-size:12px;line-height:1.5}
-    @media(max-width:1000px){.wrap,.grid{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Storyboard AI Builder</title>
+<link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-  <div class="wrap">
-    <aside>
-      <div class="card">
-        <div class="eyebrow">Fuen Belarma</div>
-        <h1>Storyboard AI Builder</h1>
-        <p class="muted">A separate mini tool inside your repo. It does not override your AI portfolio website.</p>
-      </div>
-      <div class="card">
-        <h2>Project setup</h2>
-        <label>Project name<input id="projectName" type="text" placeholder="Ex. Carol Lipstick Story"></label>
-        <label>Style<select id="style"><option>Cinematic Realistic</option><option>Pixar-quality 3D</option><option>Commercial Studio</option><option>Luxury Beauty Ad</option><option>Documentary Storytelling</option></select></label>
-        <label>Target model<select id="model"><option>General</option><option>Google Flow / Veo</option><option>Kling</option><option>Runway</option><option>Hailuo</option><option>Omni</option></select></label>
-        <label>Aspect ratio<select id="ratio"><option>9:16</option><option>16:9</option><option>1:1</option><option>4:5</option></select></label>
-        <label>Tone / mood<input id="mood" type="text" placeholder="Warm, emotional, premium"></label>
-      </div>
-      <div class="card">
-        <h2>Continuity locks</h2>
-        <label>Characters<textarea id="characters" class="small" placeholder="Carol — female, 65-70, silver-grey bob, pearl studs"></textarea></label>
-        <label>Environment / props<textarea id="environment" class="small" placeholder="Warm café, oak table, teal banquette, cups"></textarea></label>
-        <label>Global rules<textarea id="rules" class="small" placeholder="Keep identity consistent. No watermark. Natural motion."></textarea></label>
-      </div>
-    </aside>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brandMark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m8 9 4 2.2L16 9M12 11.2V16"/></svg></div>
+      <div class="brandText"><strong>Storyboard AI</strong><span>by Fuen Belarma</span></div>
+    </div>
+    <nav class="nav">
+      <button class="navBtn active" data-scroll="creator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h5M8 16h7"/></svg><span>Create</span></button>
+      <button class="navBtn" data-scroll="storyboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z"/></svg><span>Storyboard</span></button>
+      <button class="navBtn" data-scroll="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 1.98l.06.06-2.83 2.83-.06-.06a1.8 1.8 0 0 0-1.98-.36 1.8 1.8 0 0 0-1.09 1.65V21h-4v-.1A1.8 1.8 0 0 0 8.77 19.25a1.8 1.8 0 0 0-1.98.36l-.06.06-2.83-2.83.06-.06A1.8 1.8 0 0 0 4.32 15a1.8 1.8 0 0 0-1.65-1.09H2v-4h.67A1.8 1.8 0 0 0 4.32 8.8a1.8 1.8 0 0 0-.36-1.98l-.06-.06 2.83-2.83.06.06a1.8 1.8 0 0 0 1.98.36A1.8 1.8 0 0 0 9.86 2.7V2h4v.7a1.8 1.8 0 0 0 1.09 1.65 1.8 1.8 0 0 0 1.98-.36l.06-.06 2.83 2.83-.06.06a1.8 1.8 0 0 0-.36 1.98 1.8 1.8 0 0 0 1.65 1.09H22v4h-.95A1.8 1.8 0 0 0 19.4 15Z"/></svg><span>Settings</span></button>
+    </nav>
+    <div class="sideHint"><div class="tiny">Private workspace</div><p>Your project data stays in this browser. No product image is uploaded to a server in this MVP.</p></div>
+  </aside>
 
-    <main class="main">
-      <div class="card">
-        <div class="eyebrow">MVP</div>
-        <h2>Paste a script, then generate storyboard cards with image and video prompts</h2>
-        <div class="topActions">
-          <button class="btn primary" id="generateBtn">Generate storyboard</button>
-          <button class="btn secondary" id="sampleBtn">Load sample</button>
-          <button class="btn ghost" id="saveBtn">Save locally</button>
-          <button class="btn ghost" id="clearBtn">Clear</button>
+  <main class="main">
+    <header class="topbar">
+      <div class="titleWrap"><h1>Create a storyboard</h1><p>Turn a product or script into scene ideas, image prompts, and video prompts.</p></div>
+      <div class="topActions"><button class="btn subtle" id="saveBtn">Save draft</button><button class="iconBtn" id="resetBtn" title="Reset project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6"/><path d="M20 20v-6h-6"/><path d="M20 9a8 8 0 0 0-13.7-3L4 10M4 15a8 8 0 0 0 13.7 3L20 14"/></svg></button></div>
+    </header>
+
+    <section class="hero" id="creator">
+      <div><h2>Build your shot list before you generate</h2><p>Use Product mode for automatic ad concepts, Script mode for scene breakdowns, or Continuity mode to lock characters and locations across every shot.</p></div>
+      <div class="steps" aria-label="Workflow progress"><div class="step active" id="step1"><b>1</b>Input</div><div class="step" id="step2"><b>2</b>Plan</div><div class="step" id="step3"><b>3</b>Storyboard</div><div class="step" id="step4"><b>4</b>Export</div></div>
+    </section>
+
+    <section class="layout">
+      <div class="panel">
+        <div class="panelHead"><div><h3>Project input</h3><span>Choose how you want to start</span></div><span id="modeLabel">Product mode</span></div>
+        <div class="panelBody">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-mode="product">Product</button>
+            <button class="tab" data-mode="script">Script</button>
+            <button class="tab" data-mode="continuity">Continuity</button>
+          </div>
+
+          <div class="modeSection active" id="productMode">
+            <div class="dropzone" id="dropzone">
+              <input id="productImageFile" type="file" accept="image/*" aria-label="Upload product image">
+              <div class="uploadIcon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 14v5h14v-5"/></svg></div>
+              <strong>Drop your product image here</strong><p>or click to browse · PNG, JPG, WEBP</p>
+            </div>
+            <div class="productPreview" id="productPreviewWrap"><img id="productPreview" alt="Product preview"><div><strong id="productPreviewName">Product reference</strong><p>Used as a visual identity anchor in every prompt.</p></div><button class="tinyBtn" id="removeImage" title="Remove image">×</button></div>
+            <div style="height:14px"></div>
+            <div class="grid2">
+              <div class="field"><label for="productName">Product name</label><input class="input" id="productName" placeholder="e.g. TrueTone Lipstick"></div>
+              <div class="field"><label for="productCategory">Category</label><input class="input" id="productCategory" placeholder="e.g. Beauty / lipstick"></div>
+            </div>
+            <div class="field"><label for="productBenefits">Key benefits</label><textarea class="textarea" id="productBenefits" placeholder="Long-lasting color, hydrating finish, premium packaging..."></textarea></div>
+            <div class="grid2">
+              <div class="field"><label for="targetAudience">Target audience</label><input class="input" id="targetAudience" placeholder="e.g. women 35+, beauty shoppers"></div>
+              <div class="field"><label for="offerCta">Offer / CTA</label><input class="input" id="offerCta" placeholder="e.g. Discover your shade"></div>
+            </div>
+          </div>
+
+          <div class="modeSection" id="scriptMode">
+            <div class="field"><label for="script">Script</label><textarea class="textarea script" id="script" placeholder="Paste your complete script here. Separate scenes with blank lines or headings like SCENE 1, SCENE 2..."></textarea><div class="help">The planner detects scene headings and dialogue speakers automatically.</div></div>
+          </div>
+
+          <div class="modeSection" id="continuityMode">
+            <div class="field"><label for="characters">Character lock</label><textarea class="textarea" id="characters" placeholder="Carol — 65–70, silver-grey layered bob, pearl studs, sage blouse..."></textarea></div>
+            <div class="field"><label for="environment">Environment / prop lock</label><textarea class="textarea" id="environment" placeholder="Warm café, oak table, window camera-left, teal banquette..."></textarea></div>
+            <div class="field"><label for="rules">Global generation rules</label><textarea class="textarea" id="rules" placeholder="Preserve identity, wardrobe, product geometry, screen direction, realistic motion, no watermark..."></textarea></div>
+          </div>
         </div>
       </div>
 
-      <div class="grid">
-        <div class="card">
-          <h2>Script input</h2>
-          <p class="muted">Tip: separate scenes with blank lines or headings like HOOK, SCENE 1, SCENE 2, etc.</p>
-          <textarea id="script" class="script" placeholder="Paste your script here"></textarea>
+      <aside class="panel" id="settings">
+        <div class="directorCard">
+          <div class="directorHeader"><div class="directorAvatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z"/><path d="M8 10h8M9 14h6"/></svg></div><div><h3>AI Director</h3><p>Choose the creative direction</p></div></div>
+          <div class="choiceGrid" id="flowChoices">
+            <button class="choice active" data-flow="story"><strong>Story-led</strong><span>Emotional narrative with product reveal.</span></button>
+            <button class="choice" data-flow="ugc"><strong>UGC</strong><span>Fast, relatable, creator-style sequence.</span></button>
+            <button class="choice" data-flow="demo"><strong>Demo</strong><span>Feature-focused product explanation.</span></button>
+            <button class="choice" data-flow="launch"><strong>Launch</strong><span>Premium brand and hero product visuals.</span></button>
+          </div>
+          <div class="field"><label for="projectName">Project name</label><input class="input" id="projectName" placeholder="Untitled storyboard"></div>
+          <div class="grid2">
+            <div class="field"><label for="style">Visual style</label><select class="select" id="style"><option>Cinematic Realistic</option><option>Luxury Beauty Ad</option><option>Commercial Studio</option><option>Documentary Storytelling</option><option>Pixar-quality 3D</option></select></div>
+            <div class="field"><label for="ratio">Ratio</label><select class="select" id="ratio"><option>9:16</option><option>16:9</option><option>4:5</option><option>1:1</option></select></div>
+          </div>
+          <div class="grid2">
+            <div class="field"><label for="model">Target model</label><select class="select" id="model"><option>Google Flow / Veo</option><option>Kling</option><option>Runway</option><option>Hailuo</option><option>Omni</option><option>General</option></select></div>
+            <div class="field"><label for="shotCount">Shots / scene</label><select class="select" id="shotCount"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+          </div>
+          <div class="field"><label for="mood">Mood</label><input class="input" id="mood" placeholder="premium, warm, emotional"></div>
+          <div class="grid2">
+            <div class="field"><label for="camera">Camera</label><select class="select" id="camera"><option value="cinematic">Cinematic</option><option value="balanced">Balanced</option><option value="commercial">Commercial</option><option value="social">Social ad</option></select></div>
+            <div class="field"><label for="detail">Prompt detail</label><select class="select" id="detail"><option value="detailed">Detailed</option><option value="medium">Medium</option><option value="compact">Compact</option></select></div>
+          </div>
+          <div class="generateBlock">
+            <button class="btn primary" id="generateBtn">Generate storyboard</button>
+            <div class="miniStatus" id="statusBox"><b>Ready.</b> Add a product or script, then generate. The current MVP plans the visuals and prompts locally in your browser.</div>
+          </div>
         </div>
-        <div class="card">
-          <h2>Quick settings</h2>
-          <label>Default shots per scene<input id="shotCount" type="number" min="1" max="8" value="3"></label>
-          <label>Camera language<select id="camera"><option value="balanced">Balanced</option><option value="cinematic">Cinematic</option><option value="commercial">Commercial</option><option value="social">Social ads</option></select></label>
-          <label>Prompt detail<select id="detail"><option value="detailed">Detailed</option><option value="medium">Medium</option><option value="compact">Compact</option></select></label>
-          <p class="muted">This version breaks the script into scenes, creates storyboard-ready shots, writes image prompts, writes video prompts, and lets you export the result.</p>
-        </div>
+      </aside>
+    </section>
+
+    <section class="results" id="storyboard">
+      <div class="resultTop"><h3>Storyboard</h3><div class="resultTopActions"><button class="btn subtle" id="sampleBtn">Load sample</button><button class="btn subtle" id="copyAllBtn">Copy all prompts</button><button class="btn subtle" id="exportBtn">Export JSON</button></div></div>
+      <div id="resultsArea">
+        <div class="emptyState"><div class="emptyIcon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m7 15 3-3 2 2 3-4 2 2"/></svg></div><h4>Your storyboard will appear here</h4><p>Add a product or paste your script. The builder will plan scenes, shots, image prompts, video prompts, camera motion, and continuity notes.</p></div>
       </div>
+    </section>
+  </main>
+</div>
+<div class="toastWrap" id="toastWrap" aria-live="polite"></div>
+<script src="app.js"></script>
 
-      <div class="card">
-        <div class="actions">
-          <h2 style="margin-right:auto">Storyboard output</h2>
-          <button class="btn secondary" id="copyBtn">Copy text</button>
-          <button class="btn secondary" id="jsonBtn">Export JSON</button>
-        </div>
-        <div id="output" class="out">
-          <p class="muted">No storyboard yet. Paste a script and click <strong>Generate storyboard</strong>.</p>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    const $ = id => document.getElementById(id);
-    const output = $('output');
-    let lastData = [];
-
-    const shots = {
-      balanced:[['Establishing wide shot','slow push-in','6 sec','set the environment and emotional tone'],['Medium shot','gentle handheld drift','7 sec','show interaction and body language'],['Close-up','subtle static hold','5 sec','capture expression and emotional detail'],['Detail insert','micro push','4 sec','show an important prop or action detail']],
-      cinematic:[['Wide cinematic master','slow dolly-in','6 sec','introduce location with atmosphere'],['Over-the-shoulder medium shot','motivated slider move','7 sec','show character dynamic and screen direction'],['Tight close-up','locked micro motion','5 sec','highlight the emotional beat'],['Cutaway detail shot','slow macro glide','4 sec','emphasize a meaningful detail']],
-      commercial:[['Hero wide shot','smooth gimbal move','5 sec','introduce the scene in a polished way'],['Product or action medium shot','slow arc move','6 sec','show the core action clearly'],['Beauty close-up','micro push-in','4 sec','feature face, product, or key benefit moment'],['Detail insert','controlled macro move','4 sec','show texture or tactile detail']],
-      social:[['Hook shot','fast clean push-in','3 sec','grab attention immediately'],['Talking or action medium shot','light handheld energy','5 sec','deliver the main beat quickly'],['Reaction close-up','static hold','4 sec','show emotional impact'],['Support detail shot','quick insert move','3 sec','reinforce the key message visually']]
-    };
-
-    function getData(){
-      return {
-        projectName: $('projectName').value.trim() || 'Untitled Storyboard Project',
-        style: $('style').value,
-        model: $('model').value,
-        ratio: $('ratio').value,
-        mood: $('mood').value.trim() || 'natural, cinematic, emotionally grounded',
-        characters: $('characters').value.trim() || 'No explicit character lock provided. Keep character appearance consistent scene to scene.',
-        environment: $('environment').value.trim() || 'No environment lock provided. Keep lighting, geography, and props consistent.',
-        rules: $('rules').value.trim() || 'Preserve continuity and believable motion.',
-        script: $('script').value.trim(),
-        shotCount: Math.max(1, Math.min(8, Number($('shotCount').value)||3)),
-        camera: $('camera').value,
-        detail: $('detail').value
-      };
-    }
-
-    function parseScenes(text){
-      return text.split(/\n\s*\n+/).map(x=>x.trim()).filter(Boolean).map((block,i)=>{
-        const lines = block.split('\n').map(x=>x.trim()).filter(Boolean);
-        const first = lines[0] || `Scene ${i+1}`;
-        const isHeading = /^(hook|scene\s*\d+|scene\s*[a-z]+|intro|outro|ending)/i.test(first);
-        const speakers = [...new Set(lines.map(line => (line.match(/^([A-Za-z][A-Za-z\s'.-]{1,30}):/)||[])[1]).filter(Boolean))];
-        return {id:i+1,title:isHeading?first:`Scene ${String(i+1).padStart(2,'0')}`,description:isHeading?lines.slice(1).join(' '):lines.join(' '),speakers};
-      });
-    }
-
-    function shorten(text, mode){
-      const clean = text.replace(/\s+/g,' ').trim();
-      if(mode==='compact') return clean.length>180 ? clean.slice(0,180)+'…' : clean;
-      if(mode==='medium') return clean.length>320 ? clean.slice(0,320)+'…' : clean;
-      return clean;
-    }
-
-    function buildScene(scene, settings){
-      const bank = shots[settings.camera] || shots.balanced;
-      return {
-        ...scene,
-        shots: Array.from({length:settings.shotCount}, (_,i)=>{
-          const s = bank[i % bank.length];
-          const label = `Scene ${String(scene.id).padStart(2,'0')} · Shot ${String(i+1).padStart(2,'0')}`;
-          const summary = shorten(scene.description, settings.detail);
-          const who = scene.speakers.length ? `Featured characters: ${scene.speakers.join(', ')}.` : 'Use the most relevant characters from the script context.';
-          const imagePrompt = `${settings.ratio} ${settings.style} storyboard frame for ${settings.model}. ${label}. ${s[0]}. Scene goal: ${s[3]}. Scene content: ${summary} ${who} Mood: ${settings.mood}. Environment continuity lock: ${settings.environment} Character continuity lock: ${settings.characters} Global rules: ${settings.rules} Camera direction: ${s[1]}. Compose the frame clearly and keep visual continuity intact.`;
-          const videoPrompt = `Continue from the matching generated image for ${label}. Duration: ${s[2]}. Shot type: ${s[0]}. Camera motion: ${s[1]}. Action beat: ${summary} ${who} Preserve all identity details, wardrobe, environment geography, prop placement, lighting, and mood. Keep motion natural and avoid identity drift, background drift, or abrupt camera jumps. Apply these rules throughout: ${settings.rules}`;
-          return {label,duration:s[2],type:s[0],move:s[1],purpose:s[3],imagePrompt,videoPrompt};
-        })
-      };
-    }
-
-    function render(storyboard, settings){
-      output.innerHTML = '';
-      storyboard.forEach(scene => {
-        const el = document.createElement('div');
-        el.className = 'scene';
-        el.innerHTML = `<div class="actions"><div><div class="meta">Project: ${settings.projectName}</div><h3>${scene.title}</h3></div><div class="meta">${scene.shots.length} shots</div></div><p class="muted">${scene.description || 'No description provided.'}</p>`;
-        const grid = document.createElement('div');
-        grid.className = 'shotgrid';
-        scene.shots.forEach(shot => {
-          const card = document.createElement('div');
-          card.className = 'shot';
-          card.innerHTML = `<div class="actions"><strong>${shot.label}</strong><span class="meta">${shot.duration}</span></div><p class="meta">${shot.type} • ${shot.move} • ${shot.purpose}</p><h4>Image prompt</h4><pre>${shot.imagePrompt}</pre><h4>Video prompt</h4><pre>${shot.videoPrompt}</pre>`;
-          grid.appendChild(card);
-        });
-        el.appendChild(grid);
-        output.appendChild(el);
-      });
-    }
-
-    function generate(){
-      const settings = getData();
-      if(!settings.script){ alert('Please paste a script first.'); return; }
-      const storyboard = parseScenes(settings.script).map(scene => buildScene(scene, settings));
-      lastData = {settings, storyboard};
-      render(storyboard, settings);
-    }
-
-    function saveLocal(){ localStorage.setItem('storyboard-ai-builder', JSON.stringify(getData())); alert('Saved locally in your browser.'); }
-    function loadLocal(){ const raw = localStorage.getItem('storyboard-ai-builder'); if(!raw) return; try { const d = JSON.parse(raw); Object.keys(d).forEach(k=>{ if($(k)) $(k).value = d[k]; }); } catch(e){} }
-    function clearAll(){ ['projectName','mood','characters','environment','rules','script'].forEach(id=>$(id).value=''); $('style').selectedIndex=0; $('model').selectedIndex=0; $('ratio').selectedIndex=0; $('shotCount').value=3; $('camera').selectedIndex=0; $('detail').selectedIndex=0; output.innerHTML='<p class="muted">No storyboard yet. Paste a script and click <strong>Generate storyboard</strong>.</p>'; localStorage.removeItem('storyboard-ai-builder'); lastData=[]; }
-    function sample(){ $('projectName').value='Coellyo Storytelling Demo'; $('style').value='Cinematic Realistic'; $('model').value='Google Flow / Veo'; $('ratio').value='9:16'; $('mood').value='emotional, premium, natural, story-driven'; $('characters').value='Carol — female, 65-70, Caucasian, chin-length silver-grey layered bob, pearl studs, muted elegant blouse. Rachel — female, 30s, chestnut hair, soft refined wardrobe. Paul — male, 30s to 40s, neat casual-smart wardrobe.'; $('environment').value='Baby shower interior with soft daylight and pastel decorations, then warm café interior with oak table, window camera-left, teal banquette, cups and sandwich plate.'; $('rules').value='Keep all character identities consistent. No direct lens stare unless motivated. Maintain screen direction, wardrobe continuity, and believable emotions. No watermark or random text.'; $('script').value=`HOOK\nMy daughter-in-law told me to tone down my lipstick at the baby shower. Six months later, she asked what shade I was wearing.\n\nSCENE 1\nCAROL: Could we take one more photo?\nRACHEL: Maybe one with just us and the kids.\nVO: Carol steps aside, embarrassed by the comment about her lipstick.\n\nSCENE 2\nPAUL: Mom, are you okay?\nCAROL: I'm fine. I just didn't expect that.\nVO: Later at home, Carol reflects quietly before discovering a new lipstick.\n\nSCENE 3\nRACHEL: Your lipstick still looks perfect. What is that?\nCAROL: Coellyo TrueTone.\nVO: At lunch months later, the lipstick becomes the conversation starter.`; }
-    function copyText(){ if(!lastData.storyboard){ alert('Generate a storyboard first.'); return; } const t = lastData.storyboard.map(scene => scene.title+'\n'+scene.description+'\n\n'+scene.shots.map(shot => `${shot.label}\n${shot.type} | ${shot.move} | ${shot.duration}\nImage Prompt: ${shot.imagePrompt}\nVideo Prompt: ${shot.videoPrompt}`).join('\n\n')).join('\n\n==============================\n\n'); navigator.clipboard.writeText(t).then(()=>alert('Storyboard copied as text.')).catch(()=>alert('Copy failed.')); }
-    function exportJson(){ if(!lastData.storyboard){ alert('Generate a storyboard first.'); return; } const blob = new Blob([JSON.stringify(lastData,null,2)], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = (lastData.settings.projectName || 'storyboard').toLowerCase().replace(/[^a-z0-9]+/g,'-') + '-storyboard.json'; a.click(); URL.revokeObjectURL(url); }
-
-    $('generateBtn').onclick = generate; $('sampleBtn').onclick = sample; $('saveBtn').onclick = saveLocal; $('clearBtn').onclick = clearAll; $('copyBtn').onclick = copyText; $('jsonBtn').onclick = exportJson; loadLocal();
-  </script>
 </body>
 </html>

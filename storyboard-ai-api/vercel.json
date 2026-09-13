@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/analyze-product.js": {
+      "maxDuration": 60
+    }
+  }
+}
